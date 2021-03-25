@@ -1,0 +1,14 @@
+<div class="header">
+  <h1>Product Management portal</h1>
+  <div class="router">
+    <a routerLink='/home'>Home</a>
+    <a routerLink='/viewallproducts'>ViewProducts</a>
+    <a routerLink='/registerproduct'>RegisterProduct</a>
+    <a routerLink='/jobapplication'>Apply Here</a>
+  </div>
+  <button (click)="onLogOut()" class="logout-button" type="button">Sign Out</button>
+  <hr>
+</div>
+<router-outlet></router-outlet>
+
+

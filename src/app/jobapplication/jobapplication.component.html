@@ -1,0 +1,277 @@
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
+<div class="container">
+  <form [formGroup]="applicantForm" (ngSubmit)="onSubmit()">
+    <h2>Registration Form </h2>
+    <section class="basic">
+      <h3>Basic Information</h3>
+      <div class="basic-info">
+        <div class="flex-item">
+          <label for="firstName">First Name</label>
+          <input  class="form-input" id="firstName" type="text" placeholder="Enter First Name" formControlName="firstName">
+          <div class="error" *ngIf="firstNameControl.errors" >
+            <span *ngIf="firstNameControl.errors.required && (firstNameControl.touched || firstNameControl.dirty)"
+             >Required</span>
+             <span *ngIf="firstNameControl.errors.minlength && firstNameControl.touched">
+               Must be atleast {{firstNameControl.errors.minlength.requiredLength}} letters
+             </span>
+             <span *ngIf=" !(firstNameControl.errors.isNumber || firstNameControl.errors.isNumber==null) 
+             && firstNameControl.touched">
+              Name cannot contain Number
+            </span>
+            <span *ngIf=" !(firstNameControl.errors.isSymbol || firstNameControl.errors.isSymbol==null) 
+             && firstNameControl.touched">
+              Name cannot contain Symbols
+            </span>
+          </div> 
+        </div>
+        <div class="flex-item">
+          <label for="lastName">Last Name</label>
+          <input  class="form-input" id="lastName" type="text" placeholder="Enter Last Name" formControlName="lastName">
+          <div class="error" *ngIf="lastNameControl.errors" >
+            <span *ngIf="lastNameControl.errors.required && (lastNameControl.touched || lastNameControl.dirty)"
+             >Required</span>
+             <span *ngIf=" !(lastNameControl.errors.isNumber || lastNameControl.errors.isNumber==null) 
+              && lastNameControl.touched">
+              Name cannot contain Number
+            </span>
+             <span *ngIf="lastNameControl.errors.minlength && lastNameControl.touched">
+              Must be atleast {{lastNameControl.errors.minlength.requiredLength}} letters
+            </span>
+            <span *ngIf=" !(lastNameControl.errors.isSymbol || lastNameControl.errors.isSymbol==null) 
+              && lastNameControl.touched">
+              Name cannot contain Symbols
+            </span>
+            
+          </div>
+        </div>
+        <div class="flex-item">
+          <label for="age" >Age:</label>
+          <input class="form-input" type="text" formControlName="age" >
+          <div class="error" *ngIf="ageControl.errors" >
+            <span *ngIf="ageControl.errors.required && (ageControl.touched || ageControl.dirty)"
+             >Required</span>
+             <span *ngIf=" !(ageControl.errors.isAgeValid || ageControl.errors.isAgeValid==null) 
+             && ageControl.touched">
+             Age should be a number
+           </span>
+          </div>
+        </div>
+        <div class="flex-item flex-checkbox">
+          <span class="gender-title gender-content"><label for="gender">Gender</label></span>
+          <span class="gender-content">
+            <input   name="gender" type="radio" formControlName="gender" value="male">Male
+          </span>
+          <span class="gender-content">
+            <input   name="gender" type="radio"  formControlName="gender" value="female">Female
+          </span>
+          <span class="gender-content">
+            <input   name="gender" type="radio"  formControlName="gender" value="transgender">Transgender
+          </span> 
+          <span class="gender-content">
+            <input  name="gender" type="radio"  formControlName="gender" value="others">Others
+          </span> 
+          <span *ngIf="applicantForm.get('gender').value=='others'">
+            <input class="form-input" type="text" placeholder="Enter Gender">
+          </span>
+        </div>
+        <div class="flex-item">
+          <label for="dob">Date of Birth</label>
+          <input class="form-input date" id="dob"  formControlName="dateOfBirth" type="date" placeholder="">
+          <div *ngIf="dobControl.errors" >
+            <span *ngIf="dobControl.errors.required && (dobControl.touched || dobControl.dirty)"
+             class="error">Required</span>
+          </div>
+        </div>
+        <div class="flex-item">
+          <label for="qualification">Qualification</label>
+          <select class="form-input form-select" name="qualification" id="qualification" formControlName="qualification">
+            <option value="">Select Your Minimum Qualification</option>
+            <option value="matriculation">Matriculation</option>
+            <option value="high school">High School</option>
+            <option value="graduation">Graduation</option>
+            <option value="post-graduation">Post-Graduation</option>
+          </select>
+          <div *ngIf="qualificationControl.errors" >
+            <span *ngIf="qualificationControl.errors.required && (qualificationControl.touched || qualificationControl.dirty)"
+             class="error">Required</span>
+          </div>
+        </div>
+      </div>
+      <div class="login-grid">
+        <div class="flex-item">
+          <label for="email">Email Id:</label>
+          <input  class="form-input" id="email" type="text" placeholder="Enter your Name"
+          placeholder="abc@gmail.com" formControlName="email">
+          <div class="error" *ngIf="emailControl.errors" >
+            <span *ngIf="emailControl.errors.required && (emailControl.touched || emailControl.dirty)"
+             >Required</span>
+             <span *ngIf=" !(emailControl.errors.isEmailValid || emailControl.errors.isEmailValid==null) 
+             && emailControl.touched && !emailControl.errors.required">Invalid Email</span>
+          </div>
+        </div>
+        <div class="side-box">
+          <span>Upload File</span>
+          <input class="form-input"  type="file" accept="image/*" (change)="onFileUpload($event)"
+           formControlName="uploadFile">
+          <div class="image-preview">
+            <span *ngIf="applicantForm.get('uploadFile').value==null">preview</span>
+            <img *ngIf="applicantForm.get('uploadFile').value!=null" [src]="url" 
+            alt="" height="180px" width="150px">
+          </div>  
+        </div>
+        <div class="flex-item">
+          <label for="password">Enter password:</label>
+          <input (click)="onPasswordClick()"  class="form-input" id="password" type="password" placeholder="Enter your Name" formControlName="password1">
+          <div *ngIf="passReqShow" class="password-req">
+            Password requirement:
+          <ul>
+            <li class="min-length">Must contain 8-32 characters</li>
+            <li class="lowercase">Must contain at least one lowercase letter[a-z]</li>
+            <li class="uppercase">Must contain at least one uppercase letter[A-Z]</li>
+            <li class="number">Must contain at least one number[0-9]</li>
+            <li class="symbol">Must contain at least one symbol[@#$%^&*!()]</li>
+          </ul>
+          </div>
+        </div>
+        <div class="flex-item">
+          <label for="password2">Confirm password:</label>
+          <input  class="form-input" id="password2" type="password" placeholder="Enter your Name" formControlName="password2">
+          <div class="error" *ngIf="confirmPasswordControl.errors" >
+            <span *ngIf="confirmPasswordControl.errors.required && (confirmPasswordControl.touched || confirmPasswordControl.dirty)"
+             >Required</span>
+            <span *ngIf="!confirmPasswordControl.errors.passwordMatched && 
+            confirmPasswordControl.touched && !confirmPasswordControl.errors.required">
+            password does not match</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h3>Address</h3>
+      <div class="basic-info">
+        <div class="flex-item">
+          <label for="address-line-1">Address Line 1</label>
+          <input class="form-input" id="address-line-1" type="text" formControlName="addressLine1">
+          <div *ngIf="addressControl.errors" >
+            <span *ngIf="addressControl.errors.required && (addressControl.touched || addressControl.dirty)" class="error">Required</span>
+          </div>
+        </div>
+        <div class="flex-item">
+          <label for="city">City:</label>
+            <select class="form-input form-select" name="city" id="city" formControlName="city">
+              <option value="">Select city</option>
+              <option value="delhi">New Delhi</option>
+              <option value="chenai">Chennai</option>
+              <option value="mumbai">Mumabai</option>
+              <option value="kolkata">Kolkata</option>
+            </select>
+            <div *ngIf="cityControl.errors" >
+              <span *ngIf="cityControl.errors.required && (cityControl.touched || cityControl.dirty)" class="error">Required</span>
+            </div>
+        </div>
+        <div class="flex-item">
+          <label for="address-line-2">Address Line 2</label>
+            <input class="form-input" id="address-line-2" type="text" formControlName="addressLine2">
+        </div>
+        <div class="flex-item">
+          <label for="state">State:</label>
+            <select class="form-input form-select" name="state" id="state" formControlName="state">
+              <option value="">select state</option>
+              <option value="bihar">Bihar</option>
+              <option value="west bengal">West Bengal</option>
+              <option value="odissa">Odissa</option>
+              <option value="uttar pradesh">Uttar Pradesh</option>
+            </select>
+            <div *ngIf="stateControl.errors" >
+              <span *ngIf="stateControl.errors.required && (stateControl.touched || stateControl.dirty)" class="error">Required</span>
+            </div>
+        </div>
+        <div class="flex-item">
+          <label for="district">State:</label>
+            <select class="form-input form-select" name="state" id="district" formControlName="district">
+              <option value="">Select District</option>
+              <option value="vaishali">Vaishali</option>
+              <option value="patna">Patna</option>
+              <option value="siwan">Siwan</option>
+              <option value="samastipur">Samastipur</option>
+            </select>
+        </div>
+        <div class="flex-item">
+          <label for="zipcode">Zip-Code</label>
+            <input class="form-input" id="zipcode" type="text" formControlName="zipCode">
+            <div *ngIf="zipControl.errors" >
+              <span *ngIf="zipControl.errors.required && (zipControl.touched || zipControl.dirty)" class="error">Required</span>
+            </div>
+        </div>
+      </div> 
+    </section>
+    <section>
+      <h3>Extra-Curricular Activities</h3>
+      <p>Activities</p>
+      <div class="grid-container">
+        <div class="grid-items">
+          <div class="flex-item hobbies-container" formGroupName="outdoorGames">
+            <span><label for="hobbies" >Outdoor Games</label></span>
+            <span><input  name="hobbies" type="checkbox" value="cricket" formControlName="cricket">Cricket</span>
+            <span><input  name="hobbies" type="checkbox" value="hockey" formControlName="hockey">Hockey</span>
+            <span><input  name="hobbies" type="checkbox" value="tennis" formControlName="tennis">Tennis</span>
+          </div>
+        </div>
+        <div class="grid-items">
+          <div class="flex-item hobbies-container" formGroupName="artsCulture">
+            <span><label for="hobbies" >Arts & Culture</label></span>
+            <span><input  name="hobbies" type="checkbox" value="painting" formControlName="painting">Painting</span>
+            <span><input  name="hobbies" type="checkbox" value="dancing" formControlName="dancing">Dancing</span>
+            <span><input   name="hobbies" type="checkbox" value="singing" formControlName="singing">Singing</span>
+          </div>
+        </div>
+        <div class="grid-items">
+          <div class="flex-item hobbies-container" formGroupName="indoorGames">
+            <span><label for="hobbies" >Indoor Games</label></span>
+            <span><input  name="hobbies" type="checkbox" value="chess" formControlName="chess">Chess</span>
+            <span><input name="hobbies" type="checkbox" value="billiards" formControlName="billiards">Billiards</span>
+            <span><input  name="hobbies" type="checkbox" value="table-tennis" formControlName="tableTennis">Table Tennis</span>
+          </div>
+        </div>
+        <div class="grid-items">
+          <div class="flex-item hobbies-container" formGroupName="coCurricular">
+            <span><label for="hobbies" >Co-Curricular</label></span>
+            <span><input  name="hobbies" type="checkbox" value="debate" formControlName="debates">Debates</span>
+            <span><input  name="hobbies" type="checkbox" value="extempore" formControlName="extempore">Extempore</span>
+            <span><input  name="hobbies" type="checkbox" value="mun" formControlName="mun">MUN</span>
+          </div>
+        </div>
+        <div class="grid-items achievements">
+          <div formArrayName="achievements" class="flex-item flex-achieve">
+            <span class="achieve-title"><label  for="achievements">Add Achievements</label></span>
+            <div class="achievement-container">
+              <div class="div-achieve" *ngFor="let item of achievementsListControl.controls; let i=index">
+                <input formControlName="{{i}}" class="form-input form-achieve" id="achievements" type="text">
+                <button class="form-button rmv-button"  (click)="onRemoveAchievements(i)">Remove</button>
+              </div>
+            </div>
+            <button class=" form-button add-button" type="button" (click)="onAddAchievements()">Add</button>   
+          </div>
+        </div>
+      </div>
+      <div class="flex-item">
+        <label for="bio">Write something about yourself</label>
+        <textarea class="form-input textarea" name="bio" id="bio" cols="30" rows="" formControlName="bio"></textarea>
+        <span class="declaration">
+          <input  id="declaration" name="declaration" type="checkbox" value="declaration" formControlName="declaration">
+          I hereby declare that the above mentioned information provided by me is correct to 
+          best of my knowledge. In case of any descrepancy, my candidature is liable to get rejected
+        </span>
+        <div class="error" *ngIf="declarationControl.errors" >
+          <span *ngIf="!declarationControl.errors.isChecked && (declarationControl.touched || declarationControl.dirty) " 
+          >Required</span>
+        </div>
+        <span class="button">
+          <button [disabled]="!applicantForm.valid" class="form-button" type="submit">Submit</button>
+          <button class="form-button reset" type="button"(click)="onReset()">Reset</button>
+        </span>
+      </div>
+    </section>
+  </form>
+</div>

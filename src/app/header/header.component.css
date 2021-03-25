@@ -1,0 +1,20 @@
+
+.header {
+    background-color: cyan;
+    box-sizing: border-box;
+    margin-top:-10px;
+} 
+.router {
+    text-align:center;
+}
+
+h1 {
+    text-align: center;
+    margin: 0px;
+    padding:21.44px;
+}
+
+a{
+    display:inline-block;
+    padding: 0px 20px 0px 20px;
+}

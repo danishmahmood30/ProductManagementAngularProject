@@ -1,0 +1,29 @@
+<div>
+    <h3>Product List</h3>
+    <div>
+        <span *ngIf="mes">{{mes}}</span>
+        <table border="1" style="width: 60%;" (click)="delete($event)">
+            <tr>
+                <th>productid</th>
+                <th>productName</th>
+                <th>productType</th>
+                <th>quantity</th>
+                <th>price</th>
+                <th style="text-align: center;">Action</th>
+            </tr>
+            <tr *ngFor="let pro of product">
+                
+                <td>{{pro.productId}}</td>
+                <td>{{pro.productName}}</td>
+                <td>{{pro.productType}}</td>
+                <td>{{pro.quantity}}</td>
+                <td>{{pro.price}}</td>
+                <td><a routerLink='/updatecomponent'>Update</a></td>
+                <!-- <td><a routerLink='/viewproductbyid' (click)='click()'>Delete</a></td> -->
+                <td><button>Delete</button></td>
+            </tr>
+        </table>
+    
+    </div>
+</div>
+

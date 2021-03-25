@@ -1,0 +1,102 @@
+
+  <h2>Register Product</h2>
+  <div>
+    <span *ngIf="message" style="color: green;">
+      {{message}}
+    </span>
+    <span *ngIf="errmessage" style="color:red">
+      {{errmessage}}
+    </span>
+    <form [formGroup]="formgroup" (submit)='onsubmit()'>
+      <table>
+        <tr>
+          <td>Product Name:</td>
+          <td><input type="text" formControlName="productName"></td>
+        </tr>
+        <tr *ngIf="formgroup.get('productName').invalid">
+          <td colspan="2">
+            <span *ngIf="formgroup.get('productName').hasError('required')
+             && formgroup.get('productName').touched" style="color: red;">
+             *Product Name is mandatory.
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td>Product Type:</td>
+          <td><select formControlName="productType">
+            <option></option>
+            <option>HouseHold</option>
+            <option>Electronics</option>
+            <option>Gadgets</option>
+            <option>Clothes</option>
+          </select></td>
+        </tr>
+        <tr *ngIf="formgroup.get('productType').invalid">
+          <td colspan="2">
+            <span *ngIf="formgroup.get('productType').hasError('required')
+             && formgroup.get('productType').touched" style="color: red;">
+             *Product Type is mandatory.
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td>Quantity:</td>
+          <td><input type="number" formControlName="quantity" ></td>
+        </tr>
+        <tr *ngIf="formgroup.get('quantity').invalid">
+          <td colspan="2">
+            <span *ngIf="formgroup.get('quantity').hasError('required')
+            && formgroup.get('productName').touched" style="color: red;">
+             *Quantity is mandatory.
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td>Price:</td>
+          <td><input type="number" formControlName="price"></td>
+        </tr>
+        <tr *ngIf="formgroup.get('price').invalid">
+          <td colspan="2">
+            <span *ngIf="formgroup.get('price').hasError('required')
+            && formgroup.get('productName').touched" style="color: red;">
+             *Price is mandatory.
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2"><button [disabled]="formgroup.invalid">Register</button></td>
+        </tr>
+      </table>
+    </form>
+  </div>
+  <div *ngIf="message" >
+    <br><br>
+    <h3>The below Product details registered successfully</h3>
+    <table border="1" style="width: 60%;">
+      <tr >
+        <td>Product Id</td>
+        <td>{{pId}}</td>
+      </tr>
+      <tr >
+        <td>Product Name</td>
+        <td>{{pName}}</td>
+      </tr>
+      <tr >
+        <td>Product Type</td>
+        <td>{{pType}}</td>
+      </tr>
+      <tr >
+        <td>Quantity</td>
+        <td>{{pQuantity}} No.</td>
+      </tr>
+      <tr >
+        <td>Price/Quantity</td>
+        <td>{{pPrice}} Rs.</td>
+      </tr>
+
+    </table>
+    
+    
+  </div>
+  
+

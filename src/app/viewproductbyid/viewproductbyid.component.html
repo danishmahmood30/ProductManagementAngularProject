@@ -1,0 +1,31 @@
+<div>
+  <h2>Product Delete Confirmation Page</h2>
+  <table border="1" style="width: 60%;">
+    <tr >
+      <td>Product Id</td>
+      <td>{{prd.productId}}</td>
+    </tr>
+    <tr >
+      <td>Product Name</td>
+      <td>{{prd.productName}}</td>
+    </tr>
+    <tr >
+      <td>Product Type</td>
+      <td>{{prd.productType}}</td>
+    </tr>
+    <tr >
+      <td>Quantity</td>
+      <td>{{prd.quantity}}</td>
+    </tr>
+    <tr >
+      <td>Price/Quantity</td>
+      <td>{{prd.price}}</td>
+    </tr>
+
+  </table>
+  <br><br>
+  <button style="width: 20%;">Ok</button>&nbsp;&nbsp;
+  <button routerLink='/viewallproducts' (click)='onClick()' style ="width: 20%;">Cancel</button>
+
+  
+</div>
